@@ -30,7 +30,7 @@
         class="sticky top-0 z-50 h-16 px-4 sm:px-6 lg:px-8 border-b border-zinc-200 bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900">
         <flux:sidebar.toggle class="lg:hidden mr-2" icon="bars-2" inset="left" />
 
-        <x-app-logo href="{{ route('dashboard') }}" wire:navigate />
+        <x-app-logo href="{{ route('home') }}" wire:navigate />
 
         <flux:navbar class="-mb-px max-lg:hidden">
             <flux:navbar.item icon="home" :href="route('home')" :current="request()->routeIs('home')" wire:navigate>

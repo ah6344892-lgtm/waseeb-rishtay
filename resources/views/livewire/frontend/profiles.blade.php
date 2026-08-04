@@ -358,31 +358,45 @@
             {{-- Cards --}}
             <div class="mt-12 grid grid-cols-1 gap-8 md:grid-cols-2 xl:grid-cols-3">
 
-                @foreach (range(1, 6) as $profile)
+                {{-- @foreach (range(1, 6) as $profile) --}}
+                @foreach ($profiles as $profile)
                     <div
                         class="group overflow-hidden rounded-3xl border border-gray-100 bg-white shadow-lg transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl">
 
                         {{-- Image --}}
                         <div class="relative">
 
+                            {{-- <img src="{{ $profile->image ? asset('storage/' . $profile->image) : 'https://placehold.co/600x700' }}"
+                                alt="{{ $profile->name }}"
+                                class="h-80 w-full object-cover transition duration-500 group-hover:scale-105"> --}}
                             <img src="https://placehold.co/600x700"
                                 class="h-80 w-full object-cover transition duration-500 group-hover:scale-105">
 
                             {{-- Verified --}}
                             <span
-                                class="absolute left-4 top-4 rounded-full bg-green-500 px-3 py-1 text-xs font-semibold text-white">
+                                class="absolute left-4 top-4 rounded-full px-3 py-1 text-xs font-semibold text-white
+                {{ $profile->is_verified ? 'bg-green-500' : 'bg-red-500' }}">
 
-                                ✓ Verified
+                                {{ $profile->is_verified ? 'Verified' : 'Unverified' }}
 
                             </span>
 
-                            {{-- Online --}}
+                            {{-- Paid Badge --}}
+                            @if ($profile->is_paid)
+                                <span
+                                    class="absolute left-4 top-14 rounded-full bg-yellow-500 px-3 py-1 text-xs font-semibold text-white">
+                                    Premium
+                                </span>
+                            @endif
+
+                            {{-- Active --}}
                             <span
                                 class="absolute right-4 top-4 flex items-center gap-2 rounded-full bg-white px-3 py-1 text-xs font-semibold text-gray-700 shadow">
 
-                                <span class="h-2.5 w-2.5 rounded-full bg-green-500"></span>
+                                <span
+                                    class="h-2.5 w-2.5 rounded-full {{ $profile->is_active ? 'bg-green-500' : 'bg-red-500' }}"></span>
 
-                                Online
+                                {{ $profile->is_active ? 'Active' : 'Inactive' }}
 
                             </span>
 
@@ -402,91 +416,81 @@
                             <div class="flex items-center justify-between">
 
                                 <h3 class="text-2xl font-bold text-gray-900">
-
-                                    Ahmed Ali
-
+                                    {{ $profile->name }}
                                 </h3>
 
                                 <span
                                     class="rounded-full bg-secondary/10 px-3 py-1 text-sm font-semibold text-secondary">
-
-                                    ID #1024
-
+                                    {{ $profile->profile_id }}
                                 </span>
 
                             </div>
 
                             <p class="mt-2 text-gray-500">
-
-                                Software Engineer
-
+                                {{ $profile->profession }} • {{ $profile->marital_status }}
                             </p>
 
                             {{-- Details --}}
                             <div class="mt-6 grid grid-cols-2 gap-4">
 
                                 <div class="rounded-xl border border-gray-100 bg-gray-50 p-3">
-
                                     <p class="text-xs text-gray-500">
-
                                         Age
-
                                     </p>
 
                                     <h4 class="mt-1 font-semibold">
-
-                                        27 Years
-
+                                        {{ $profile->age }} Years
                                     </h4>
-
                                 </div>
 
                                 <div class="rounded-xl border border-gray-100 bg-gray-50 p-3">
-
                                     <p class="text-xs text-gray-500">
-
                                         City
-
                                     </p>
 
                                     <h4 class="mt-1 font-semibold">
-
-                                        Lahore
-
+                                        {{ $profile->city }}
                                     </h4>
-
                                 </div>
 
                                 <div class="rounded-xl border border-gray-100 bg-gray-50 p-3">
-
                                     <p class="text-xs text-gray-500">
-
                                         Education
-
                                     </p>
 
                                     <h4 class="mt-1 font-semibold">
-
-                                        BS CS
-
+                                        {{ $profile->education }}
                                     </h4>
-
                                 </div>
 
                                 <div class="rounded-xl border border-gray-100 bg-gray-50 p-3">
-
                                     <p class="text-xs text-gray-500">
-
-                                        Religion
-
+                                        Sect
                                     </p>
 
                                     <h4 class="mt-1 font-semibold">
-
-                                        Muslim
-
+                                        {{ $profile->sect ?? 'N/A' }}
                                     </h4>
+                                </div>
 
+                                <div class="rounded-xl border border-gray-100 bg-gray-50 p-3">
+                                    <p class="text-xs text-gray-500">
+                                        Caste
+                                    </p>
+
+                                    <h4 class="mt-1 font-semibold">
+                                        {{ $profile->caste }}
+                                    </h4>
+                                </div>
+
+                                <div class="rounded-xl border border-gray-100 bg-gray-50 p-3">
+                                    <p class="text-xs text-gray-500">
+                                        Height
+                                    </p>
+
+                                    <h4 class="mt-1 font-semibold">
+                                        {{ $profile->height }}
+                                    </h4>
                                 </div>
 
                             </div>
@@ -494,7 +498,7 @@
                             {{-- Buttons --}}
                             <div class="mt-8 flex gap-3">
 
-                                <a href="#"
+                                <a href=""
                                     class="flex-1 rounded-xl bg-primary px-5 py-3 text-center font-semibold text-white transition hover:bg-primary/90">
 
                                     View Profile
