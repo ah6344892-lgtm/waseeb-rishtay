@@ -5,6 +5,7 @@ use App\Livewire\Frontend\Home;
 use App\Livewire\Frontend\Profiles;
 use App\Livewire\Frontend\ProfileDetail;
 use App\Livewire\Frontend\Contact;
+use App\Livewire\Admin\Dashboard;
 use Illuminate\Support\Facades\Route;
 
 // Route::view('/', 'welcome')->name('home');
@@ -14,9 +15,22 @@ Route::get('/about', About::class)->name('about');
 Route::get('/profiles', Profiles::class)->name('profiles');
 Route::get('/profile/{profile_id}', ProfileDetail::class)->name('profile_detail');
 Route::get('/contact', Contact::class)->name('contact');
-
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::view('dashboard', 'dashboard')->name('dashboard');
+    Route::get('/dashboard', function () {
+        return redirect()->route('admin.dashboard');
+    })->name('dashboard');
 });
+
+Route::middleware([
+    'auth',
+    'verified',
+])
+    ->prefix('admin')
+    ->name('admin.')
+    ->group(function () {
+
+        Route::get('dashboard', Dashboard::class)->name('dashboard');
+        Route::get('/dashboard', Dashboard::class)->name('dashboard');
+    });
 
 require __DIR__ . '/settings.php';
