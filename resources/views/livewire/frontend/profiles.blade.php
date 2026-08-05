@@ -369,8 +369,17 @@
                             {{-- <img src="{{ $profile->image ? asset('storage/' . $profile->image) : 'https://placehold.co/600x700' }}"
                                 alt="{{ $profile->name }}"
                                 class="h-80 w-full object-cover transition duration-500 group-hover:scale-105"> --}}
-                            <img src="https://placehold.co/600x700"
-                                class="h-80 w-full object-cover transition duration-500 group-hover:scale-105">
+                            <div class="relative h-80 overflow-hidden rounded-2xl bg-gray-100">
+
+                                {{-- Blur Background --}}
+                                <img src="{{ asset('profile_images/f-pic1.jpg') }}" alt="{{ $profile->name }}"
+                                    class="absolute inset-0 h-full w-full scale-110 object-cover blur-2xl opacity-30">
+
+                                {{-- Main Image --}}
+                                <img src="{{ asset('profile_images/f-pic1.jpg') }}" alt="{{ $profile->name }}"
+                                    class="relative z-0 h-full w-full object-contain transition-transform duration-500 group-hover:scale-105">
+
+                            </div>
 
                             {{-- Verified --}}
                             <span
@@ -498,7 +507,7 @@
                             {{-- Buttons --}}
                             <div class="mt-8 flex gap-3">
 
-                                <a href=""
+                                <a href="{{ route('profile_detail', $profile->profile_id) }}"
                                     class="flex-1 rounded-xl bg-primary px-5 py-3 text-center font-semibold text-white transition hover:bg-primary/90">
 
                                     View Profile
@@ -541,11 +550,11 @@
                     <p class="mt-2 text-gray-500">
                         Showing
                         <span class="font-semibold text-primary">
-                            1 - 6
+                            {{ $profiles->firstItem() ?? 0 }} - {{ $profiles->lastItem() ?? 0 }}
                         </span>
                         of
                         <span class="font-semibold text-primary">
-                            245
+                            {{ $profiles->total() }}
                         </span>
                         verified profiles.
                     </p>
@@ -554,13 +563,13 @@
 
                 <div class="flex flex-col gap-3 sm:flex-row">
 
-                    <select
+                    <select wire:model.live="sort"
                         class="rounded-xl border border-gray-200 bg-white px-5 py-3 outline-none transition focus:border-primary focus:ring-4 focus:ring-primary/10">
 
-                        <option>Newest First</option>
-                        <option>Oldest First</option>
-                        <option>Age: Low to High</option>
-                        <option>Age: High to Low</option>
+                        <option value="newest">Newest First</option>
+                        <option value="oldest">Oldest First</option>
+                        <option value="age_low">Age: Low to High</option>
+                        <option value="age_high">Age: High to Low</option>
 
                     </select>
 
@@ -569,7 +578,7 @@
             </div>
 
             {{-- Pagination --}}
-            <div class="mt-10 flex flex-wrap items-center justify-center gap-3">
+            {{-- <div class="mt-10 flex flex-wrap items-center justify-center gap-3">
 
                 <button
                     class="rounded-xl border border-gray-200 bg-white px-5 py-3 font-medium text-gray-600 transition hover:border-primary hover:text-primary">
@@ -613,8 +622,14 @@
 
                 </button>
 
+            </div> --}}
+            <div>
+                @if ($profiles->hasPages())
+                    <div class="mt-12">
+                        {{ $profiles->links(data: ['scrollTo' => false]) }}
+                    </div>
+                @endif
             </div>
-
             {{-- Empty State (Show only when no profiles found) --}}
             {{-- Remove "hidden" when needed --}}
             <div class="hidden mt-16">

@@ -31,7 +31,7 @@
     </section>
 
     {{-- Footer --}}
-    <div class="bg-primary pt-24">
+    <div class="bg-primary pt-24 rounded-2xl">
 
         <div class="mx-auto max-w-7xl px-4 pb-10 sm:px-6 lg:px-8">
 

@@ -46,13 +46,22 @@
                             {{-- <img src="{{ $profile->image ? asset('storage/' . $profile->image) : 'https://placehold.co/600x700' }}"
                                 alt="{{ $profile->name }}"
                                 class="h-80 w-full object-cover transition duration-500 group-hover:scale-105"> --}}
-                            <img src="https://placehold.co/600x700"
-                                class="h-80 w-full object-cover transition duration-500 group-hover:scale-105">
+                            <div class="relative h-80 overflow-hidden rounded-2xl bg-gray-100">
+
+                                {{-- Blur Background --}}
+                                <img src="{{ asset('profile_images/f-pic1.jpg') }}" alt="{{ $profile->name }}"
+                                    class="absolute inset-0 h-full w-full scale-110 object-cover blur-2xl opacity-30">
+
+                                {{-- Main Image --}}
+                                <img src="{{ asset('profile_images/f-pic1.jpg') }}" alt="{{ $profile->name }}"
+                                    class="relative z-0 h-full w-full object-contain transition-transform duration-500 group-hover:scale-105">
+
+                            </div>
 
                             {{-- Verified --}}
                             <span
                                 class="absolute left-4 top-4 rounded-full px-3 py-1 text-xs font-semibold text-white
-                {{ $profile->is_verified ? 'bg-green-500' : 'bg-red-500' }}">
+                                {{ $profile->is_verified ? 'bg-green-500' : 'bg-red-500' }}">
 
                                 {{ $profile->is_verified ? 'Verified' : 'Unverified' }}
 

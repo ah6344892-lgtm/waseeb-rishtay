@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', Home::class)/*->middleware('auth')*/->name('home');
 Route::get('/about', About::class)->name('about');
 Route::get('/profiles', Profiles::class)->name('profiles');
-Route::get('/profile/{slug}', ProfileDetail::class)->name('profile');
+Route::get('/profile/{profile_id}', ProfileDetail::class)->name('profile_detail');
 Route::get('/contact', Contact::class)->name('contact');
 
 Route::middleware(['auth', 'verified'])->group(function () {
