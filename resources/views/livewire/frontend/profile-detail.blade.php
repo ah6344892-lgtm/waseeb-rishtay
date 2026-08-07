@@ -25,12 +25,13 @@
 
                             @if ($profile->image)
                                 {{-- Blur Background --}}
-                                <img src="{{ asset('profile_images/f-pic2.jpg') }}" alt=""
+                                <img src="{{ $profile->image ? Storage::url($profile->image) : 'https://placehold.co/60x60?text=No+Image' }}"
+                                    alt=""
                                     class="absolute inset-0 h-full w-full scale-110 object-cover blur-2xl opacity-30">
 
                                 {{-- Main Image --}}
-                                <img src="{{ asset('profile_images/f-pic2.jpg') }}" alt="{{ $profile->name }}"
-                                    class="relative z-10 h-full w-full object-contain">
+                                <img src="{{ $profile->image ? Storage::url($profile->image) : 'https://placehold.co/60x60?text=No+Image' }}"
+                                    alt="{{ $profile->name }}" class="relative z-10 h-full w-full object-contain">
                             @else
                                 <img src="https://placehold.co/500x700" alt="{{ $profile->name }}"
                                     class="h-full w-full object-contain">

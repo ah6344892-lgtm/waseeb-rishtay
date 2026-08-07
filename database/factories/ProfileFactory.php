@@ -96,7 +96,7 @@ class ProfileFactory extends Factory
 
             'phone' => '03' . fake()->numerify('#########'),
 
-            'image' => 'profiles/default.png',
+            'image' => 'profiles/default.jpg',
 
             'is_verified' => fake()->boolean(70),
 

@@ -43,6 +43,7 @@ class Profile extends Model
         'is_featured',
 
         'verified_at',
+        'status',
     ];
 
     protected $casts = [

@@ -55,7 +55,7 @@ return new class extends Migration
             $table->string('phone', 20);
 
             // Image
-            $table->string('images')->nullable();
+            $table->string('image')->nullable();
 
             // Status
             $table->boolean('is_verified')->default(false);
