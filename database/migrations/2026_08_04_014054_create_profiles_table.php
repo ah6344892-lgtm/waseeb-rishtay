@@ -55,13 +55,16 @@ return new class extends Migration
             $table->string('phone', 20);
 
             // Image
-            $table->string('image')->nullable();
+            $table->string('images')->nullable();
 
             // Status
             $table->boolean('is_verified')->default(false);
             $table->boolean('is_paid')->default(false);
             $table->boolean('is_active')->default(true);
             $table->boolean('is_featured')->default(false);
+
+            $table->string('slug')->unique()->nullable();
+            $table->date('date_of_birth')->nullable();
 
             $table->timestamp('verified_at')->nullable();
 
