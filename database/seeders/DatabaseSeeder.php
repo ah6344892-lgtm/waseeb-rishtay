@@ -19,12 +19,19 @@ class DatabaseSeeder extends Seeder
 
         User::factory()->create([
             'name' => 'Test User',
-            'email' => 'test@gmail.com',
+            'email' => 'super-admin@gmail.com',
             'password' => 'password',
         ]);
+
         $this->call([
             RolePermissionSeeder::class,
             ProfileSeeder::class,
         ]);
+
+        $user = User::where('email', 'admin@gmail.com')->first();
+
+        if ($user) {
+            $user->assignRole('super-admin');
+        }
     }
 }
