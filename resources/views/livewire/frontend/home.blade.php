@@ -49,11 +49,13 @@
                             <div class="relative h-80 overflow-hidden rounded-2xl bg-gray-100">
 
                                 {{-- Blur Background --}}
-                                <img src="{{ asset('profile_images/f-pic1.jpg') }}" alt="{{ $profile->name }}"
+                                <img src="{{ $profile->image ? Storage::url($profile->image) : 'https://placehold.co/60x60?text=No+Image' }}"
+                                    alt="{{ $profile->name }}"
                                     class="absolute inset-0 h-full w-full scale-110 object-cover blur-2xl opacity-30">
 
                                 {{-- Main Image --}}
-                                <img src="{{ asset('profile_images/f-pic1.jpg') }}" alt="{{ $profile->name }}"
+                                <img src="{{ $profile->image ? Storage::url($profile->image) : 'https://placehold.co/60x60?text=No+Image' }}"
+                                    alt="{{ $profile->name }}"
                                     class="relative z-0 h-full w-full object-contain transition-transform duration-500 group-hover:scale-105">
 
                             </div>

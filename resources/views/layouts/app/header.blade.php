@@ -52,10 +52,14 @@
                 {{ __('Contact') }}
             </flux:navbar.item>
 
+            {{-- @can('viewAny', App\Models\User::class) --}}
+            {{-- @role('admin|super-admin') --}}
             <flux:navbar.item icon="squares-2x2" :href="route('admin.dashboard')"
                 :current="request()->routeIs('admin.dashboard')" wire:navigate>
                 {{ __('Dashboard') }}
             </flux:navbar.item>
+            {{-- @endrole --}}
+            {{-- @endcan --}}
         </flux:navbar>
 
         <flux:spacer />

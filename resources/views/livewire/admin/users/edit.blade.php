@@ -97,7 +97,7 @@
                         Role
                     </flux:label>
 
-                    <flux:select wire:model.live="role">
+                    <flux:select wire:model.live="role" :disabled="$user->id === auth()->id()">
 
                         <option value="">
                             Select Role

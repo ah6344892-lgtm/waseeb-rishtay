@@ -253,18 +253,23 @@
 
                                 <div class="flex justify-end gap-2">
 
-                                    <flux:button size="xs" variant="ghost" icon="pencil-square"
-                                        :href="route('admin.users.edit', $user)">
+                                    @can('update', $user)
+                                        <flux:button size="xs" variant="ghost" icon="pencil-square"
+                                            :href="route('admin.users.edit', $user)">
 
-                                        Edit
+                                            Edit
 
-                                    </flux:button>
-                                    <flux:button size="xs" variant="danger" icon="trash"
-                                        wire:click="confirmDelete({{ $user->id }})">
+                                        </flux:button>
+                                    @endcan
 
-                                        Delete
+                                    @can('delete', $user)
+                                        <flux:button size="xs" variant="danger" icon="trash"
+                                            wire:click="confirmDelete({{ $user->id }})">
 
-                                    </flux:button>
+                                            Delete
+
+                                        </flux:button>
+                                    @endcan
 
                                 </div>
 
@@ -294,12 +299,14 @@
 
                                     </flux:text>
 
-                                    <flux:button class="mt-6" variant="primary" icon="plus"
-                                        :href="route('admin.users.create')">
+                                    @can('create', User::class)
+                                        <flux:button class="mt-6" variant="primary" icon="plus"
+                                            :href="route('admin.users.create')">
 
-                                        Add User
+                                            Add User
 
-                                    </flux:button>
+                                        </flux:button>
+                                    @endcan
 
                                 </div>
 

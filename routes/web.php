@@ -35,7 +35,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 Route::middleware([
     'auth',
     'verified',
-    // 'role:Super Admin|Admin',
+    'role:super-admin|admin',
 ])->prefix('admin')->name('admin.')->group(function () {
 
     // Dashboard

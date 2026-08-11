@@ -20,6 +20,10 @@ class Index extends Component
     public ?User $deletingUser = null;
     public bool $showDeleteModal = false;
 
+    public function mount(): void
+    {
+        $this->authorize('viewAny', User::class);
+    }
     public function updatingRole()
     {
         $this->resetPage();
@@ -43,9 +47,12 @@ class Index extends Component
 
     public function delete(): void
     {
+
         if (! $this->deletingUser) {
             return;
         }
+
+        $this->authorize('delete', $this->deletingUser);
 
         $this->deletingUser->delete();
         $this->deletingUser = null;

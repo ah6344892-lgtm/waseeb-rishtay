@@ -75,8 +75,10 @@ class Edit extends Component
         $this->validateOnly($property);
     }
 
-    public function update(): void
+    /* public function update(): void
     {
+        $this->authorize('update', $this->user);
+
         $validated = $this->validate();
 
         $this->user->update([
@@ -108,11 +110,147 @@ class Edit extends Component
 
         $this->user->save();
 
-        $this->user->syncRoles($validated['role']);
+        /*
+        |--------------------------------------------------------------------------
+        | Role
+        |--------------------------------------------------------------------------
+        */
+
+    /*   if ($validated['role'] !== $this->user->getRoleNames()->first()) {
+
+            $this->authorize(
+                'assignRole',
+                [$this->user, $validated['role']]
+            );
+
+            $this->user->syncRoles($validated['role']);
+        }
+
+        // $this->user->syncRoles($validated['role']);
 
         session()->flash('success', 'User updated successfully.');
 
         $this->redirectRoute('admin.users.index', navigate: true);
+    }
+    */
+
+    public function update(): void
+    {
+        $validated = $this->validate();
+
+        /*
+    |--------------------------------------------------------------------------
+    | Update User
+    |--------------------------------------------------------------------------
+    */
+
+        $this->authorize('update', $this->user);
+
+        /*
+    |--------------------------------------------------------------------------
+    | Current Role
+    |--------------------------------------------------------------------------
+    */
+
+        $currentRole = $this->user
+            ->getRoleNames()
+            ->first();
+
+        /*
+    |--------------------------------------------------------------------------
+    | Role Change
+    |--------------------------------------------------------------------------
+    |
+    | Role authorization is separate from normal user editing.
+    |
+    */
+
+        if ($validated['role'] !== $currentRole) {
+            $this->authorize(
+                'assignRole',
+                [
+                    $this->user,
+                    $validated['role'],
+                ]
+            );
+        }
+
+        /*
+    |--------------------------------------------------------------------------
+    | Update Basic Information
+    |--------------------------------------------------------------------------
+    */
+
+        $this->user->update([
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'status' => $validated['status'],
+        ]);
+
+        /*
+    |--------------------------------------------------------------------------
+    | Password
+    |--------------------------------------------------------------------------
+    */
+
+        if (! empty($validated['password'])) {
+            $this->user->update([
+                'password' => $validated['password'],
+            ]);
+        }
+
+        /*
+    |--------------------------------------------------------------------------
+    | Avatar
+    |--------------------------------------------------------------------------
+    */
+
+        if ($this->avatar) {
+
+            if (
+                $this->user->avatar &&
+                Storage::disk('public')->exists($this->user->avatar)
+            ) {
+                Storage::disk('public')->delete(
+                    $this->user->avatar
+                );
+            }
+
+            $this->user->avatar = $this->avatar->store(
+                'avatars',
+                'public'
+            );
+
+            $this->user->save();
+        }
+
+        /*
+    |--------------------------------------------------------------------------
+    | Assign Role
+    |--------------------------------------------------------------------------
+    */
+
+        if ($validated['role'] !== $currentRole) {
+            $this->user->syncRoles(
+                $validated['role']
+            );
+        }
+
+        /*
+    |--------------------------------------------------------------------------
+    | Success
+    |--------------------------------------------------------------------------
+    */
+
+        session()->flash(
+            'success',
+            'User updated successfully.'
+        );
+
+        $this->redirectRoute(
+            'admin.users.index',
+            navigate: true
+        );
     }
 
     public function resetForm(): void
@@ -147,6 +285,29 @@ class Edit extends Component
 
     public function render()
     {
-        return view('livewire.admin.users.edit', ['roles' => Role::orderBy('name')->get()]);
+        $authUser = auth()->user();
+
+        $roles = Role::query()
+            ->when(
+                ! $authUser->hasRole('super-admin'),
+                function ($query) use ($authUser) {
+                    $query->where('name', 'user');
+
+                    // Keep current role visible while editing yourself
+                    if ($this->user->id === $authUser->id) {
+                        $currentRole = $this->user
+                            ->getRoleNames()
+                            ->first();
+
+                        if ($currentRole) {
+                            $query->orWhere('name', $currentRole);
+                        }
+                    }
+                }
+            )
+            ->orderBy('name')
+            ->get();
+
+        return view('livewire.admin.users.edit', ['roles' => $roles]);
     }
 }

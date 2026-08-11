@@ -58,8 +58,16 @@ class Create extends Component
         ];
     }
 
+    public function mount(): void
+    {
+        $this->authorize('create', User::class);
+    }
+
+    /*
     public function save(): void
     {
+        $this->authorize('create', User::class);
+
         $validated = $this->validate();
 
         $avatar = null;
@@ -83,7 +91,92 @@ class Create extends Component
 
         $this->redirectRoute('admin.users.index', navigate: true);
     }
+    */
+    public function save(): void
+    {
+        /*
+    |--------------------------------------------------------------------------
+    | Create Authorization
+    |--------------------------------------------------------------------------
+    */
 
+        $this->authorize('create', User::class);
+
+        /*
+    |--------------------------------------------------------------------------
+    | Validate
+    |--------------------------------------------------------------------------
+    */
+
+        $validated = $this->validate();
+
+        /*
+    |--------------------------------------------------------------------------
+    | Role Authorization
+    |--------------------------------------------------------------------------
+    */
+
+        $this->authorize(
+            'assignRoleToNewUser',
+            [
+                new User,
+                $validated['role'],
+            ]
+        );
+
+        /*
+    |--------------------------------------------------------------------------
+    | Avatar
+    |--------------------------------------------------------------------------
+    */
+
+        $avatar = null;
+
+        if ($this->avatar) {
+            $avatar = $this->avatar->store(
+                'avatars',
+                'public'
+            );
+        }
+
+        /*
+    |--------------------------------------------------------------------------
+    | Create User
+    |--------------------------------------------------------------------------
+    */
+
+        $user = User::create([
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'password' => $validated['password'],
+            'status' => $validated['status'],
+            'avatar' => $avatar,
+        ]);
+
+        /*
+    |--------------------------------------------------------------------------
+    | Assign Role
+    |--------------------------------------------------------------------------
+    */
+
+        $user->assignRole($validated['role']);
+
+        /*
+    |--------------------------------------------------------------------------
+    | Success
+    |--------------------------------------------------------------------------
+    */
+
+        session()->flash(
+            'success',
+            'User created successfully.'
+        );
+
+        $this->redirectRoute(
+            'admin.users.index',
+            navigate: true
+        );
+    }
     public function resetForm(): void
     {
         $this->reset([
@@ -107,8 +200,18 @@ class Create extends Component
 
     public function render()
     {
+        $authUser = auth()->user();
+
+        $roles = Role::query()
+            ->when(
+                ! $authUser->hasRole('super-admin'),
+                fn($query) => $query->where('name', 'user')
+            )
+            ->orderBy('name')
+            ->get();
+
         return view('livewire.admin.users.create', [
-            'roles' => Role::orderBy('name')->get(),
+            'roles' => $roles,
         ]);
     }
 }
