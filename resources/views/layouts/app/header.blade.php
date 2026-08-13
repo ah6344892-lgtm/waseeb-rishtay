@@ -53,12 +53,12 @@
             </flux:navbar.item>
 
             {{-- @can('viewAny', App\Models\User::class) --}}
-            {{-- @role('admin|super-admin') --}}
-            <flux:navbar.item icon="squares-2x2" :href="route('admin.dashboard')"
-                :current="request()->routeIs('admin.dashboard')" wire:navigate>
-                {{ __('Dashboard') }}
-            </flux:navbar.item>
-            {{-- @endrole --}}
+            @role('admin|super-admin')
+                <flux:navbar.item icon="squares-2x2" :href="route('admin.dashboard')"
+                    :current="request()->routeIs('admin.dashboard')" wire:navigate>
+                    {{ __('Dashboard') }}
+                </flux:navbar.item>
+            @endrole
             {{-- @endcan --}}
         </flux:navbar>
 
@@ -120,12 +120,12 @@
                     wire:navigate>
                     Contact
                 </flux:sidebar.item>
-
-                <flux:sidebar.item icon="squares-2x2" :href="route('admin.dashboard')"
-                    :current="request()->routeIs('admin.dashboard')" wire:navigate>
-                    Dashboard
-                </flux:sidebar.item>
-
+                @role('admin|super-admin')
+                    <flux:sidebar.item icon="squares-2x2" :href="route('admin.dashboard')"
+                        :current="request()->routeIs('admin.dashboard')" wire:navigate>
+                        Dashboard
+                    </flux:sidebar.item>
+                @endrole
             </flux:sidebar.group>
         </flux:sidebar.nav>
 

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\SitemapController;
 use App\Livewire\Frontend\About;
 use App\Livewire\Frontend\Home;
 use App\Livewire\Frontend\Profiles;
@@ -26,6 +27,7 @@ Route::get('/about', About::class)->name('about');
 Route::get('/profiles', Profiles::class)->name('profiles');
 Route::get('/profile/{profile_id}', ProfileDetail::class)->name('profile_detail');
 Route::get('/contact', Contact::class)->name('contact');
+Route::get('/sitemap.xml', [SitemapController::class, 'index'])->name('sitemap');
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', function () {
         return redirect()->route('admin.dashboard');
