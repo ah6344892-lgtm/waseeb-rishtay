@@ -6,6 +6,7 @@ use App\Livewire\Frontend\Home;
 use App\Livewire\Frontend\Profiles;
 use App\Livewire\Frontend\ProfileDetail;
 use App\Livewire\Frontend\Contact;
+use App\Livewire\Frontend\CreateProfile;
 use App\Livewire\Admin\Dashboard;
 
 use App\Livewire\Admin\Users\Index as UserIndex;
@@ -27,6 +28,7 @@ Route::get('/about', About::class)->name('about');
 Route::get('/profiles', Profiles::class)->name('profiles');
 Route::get('/profile/{profile_id}', ProfileDetail::class)->name('profile_detail');
 Route::get('/contact', Contact::class)->name('contact');
+Route::get('/create-profile', CreateProfile::class)->middleware('auth')->name('create_profile');
 Route::get('/sitemap.xml', [SitemapController::class, 'index'])->name('sitemap');
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', function () {

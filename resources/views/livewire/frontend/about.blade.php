@@ -1025,7 +1025,7 @@
 
                             <div class="mt-10 flex flex-wrap gap-4">
 
-                                <a href="{{ route('register') }}"
+                                <a href="{{ route('create_profile') }}"
                                     class="rounded-xl bg-primary px-8 py-4 font-semibold text-white transition hover:-translate-y-1 hover:shadow-xl">
 
                                     Create Free Profile

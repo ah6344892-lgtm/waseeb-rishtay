@@ -58,7 +58,7 @@
                 {{-- Buttons --}}
                 <div class="mt-8 flex flex-col gap-4 sm:flex-row lg:justify-start justify-center">
 
-                    <a href="{{ route('register') }}"
+                    <a href="{{ route('create_profile') }}"
                         class="w-full sm:w-auto group inline-flex hover:scale-105 items-center rounded-xl bg-primary px-7 py-3 font-semibold text-white shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
 
                         Create Profile
