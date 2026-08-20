@@ -29,6 +29,9 @@ Route::get('/profiles', Profiles::class)->name('profiles');
 Route::get('/profile/{profile_id}', ProfileDetail::class)->name('profile_detail');
 Route::get('/contact', Contact::class)->name('contact');
 Route::get('/create-profile', CreateProfile::class)->middleware('auth')->name('create_profile');
+Route::get('/my-profile', function () {
+    return redirect()->route('profiles');
+})->middleware('auth')->name('my-profile');
 Route::get('/sitemap.xml', [SitemapController::class, 'index'])->name('sitemap');
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', function () {

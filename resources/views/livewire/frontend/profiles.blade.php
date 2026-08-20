@@ -386,7 +386,7 @@
                             {{-- Verified --}}
                             <span
                                 class="absolute left-4 top-4 rounded-full px-3 py-1 text-xs font-semibold text-white
-                {{ $profile->is_verified ? 'bg-green-500' : 'bg-red-500' }}">
+                                         {{ $profile->is_verified ? 'bg-green-500' : 'bg-red-500' }}">
 
                                 {{ $profile->is_verified ? 'Verified' : 'Unverified' }}
 

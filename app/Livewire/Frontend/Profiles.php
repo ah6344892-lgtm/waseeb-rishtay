@@ -36,7 +36,8 @@ class Profiles extends Component
                 break;
         }
 
-        $profiles = $profile->paginate(6);
+
+        $profiles = $profile->where('status', 'approved')->paginate(10);
 
         return view('livewire.frontend.profiles', compact('profiles'))
             ->layout('layouts.frontend');

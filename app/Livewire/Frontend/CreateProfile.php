@@ -44,10 +44,15 @@ class CreateProfile extends Component
     // Image
     public $image;
 
+
+    // $profile = Profile::where('user_id', auth()->id());
+
     public function mount()
     {
-        if (Profile::where('user_id', auth()->id())->exists()) {
-            return redirect()->route('my-profile');
+        $profile = Profile::where('user_id', auth()->id())->first();
+
+        if ($profile) {
+            return redirect()->route('profile_detail', $profile->profile_id);
         }
     }
 
@@ -95,19 +100,21 @@ class CreateProfile extends Component
     {
         $validated = $this->validate();
 
+        $profile = Profile::where('user_id', auth()->id())->first();
+
         /*
         |--------------------------------------------------------------------------
         | Prevent Duplicate Profile
         |--------------------------------------------------------------------------
         */
 
-        if (Profile::where('user_id', auth()->id())->exists()) {
+        if ($profile) {
             session()->flash(
                 'error',
                 'You already have a profile.'
             );
 
-            return redirect()->route('my-profile');
+            return redirect()->route('profile_detail', $profile->profile_id);
         }
 
         DB::transaction(function () use ($validated) {
@@ -212,7 +219,9 @@ class CreateProfile extends Component
             'Your profile has been submitted successfully. It is now waiting for admin approval.'
         );
 
-        return redirect()->route('my-profile');
+        $profile = Profile::where('user_id', auth()->id())->first();
+
+        return redirect()->route('profile_detail', $profile->profile_id);
     }
 
     private function generateProfileId()
