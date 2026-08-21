@@ -59,7 +59,7 @@
 
                         </a>
 
-                        <a href="https://wa.me/92333333333" target="_blank"
+                        <a href="https://wa.me/{{ config('contact.whatsapp') }}" target="_blank"
                             class="rounded-xl border border-primary px-8 py-4 font-semibold text-primary transition-all duration-300 hover:bg-primary hover:text-white">
 
                             WhatsApp Us
@@ -218,7 +218,7 @@
             <div class="mt-16 grid gap-8 md:grid-cols-2 xl:grid-cols-4">
 
                 {{-- WhatsApp --}}
-                <a href="https://wa.me/923166402062" target="_blank"
+                <a href="https://wa.me/{{ config('contact.whatsapp') }}" target="_blank"
                     class="group rounded-3xl border border-gray-100 bg-white p-8 shadow-lg transition-all duration-300 hover:-translate-y-2 hover:border-primary/20 hover:shadow-2xl">
 
                     <div
@@ -243,7 +243,7 @@
                 </a>
 
                 {{-- Email --}}
-                <a href="mailto:info@waseebrishtay.com"
+                <a href="mailto:{{ config('contact.email') }}"
                     class="group rounded-3xl border border-gray-100 bg-white p-8 shadow-lg transition-all duration-300 hover:-translate-y-2 hover:border-primary/20 hover:shadow-2xl">
 
                     <div

@@ -9,7 +9,7 @@ class Home extends Component
 {
     public function render()
     {
-        $profiles = Profile::latest()->take(6)->get();
+        $profiles = Profile::where('status', 'approved')->latest()->take(6)->get();
 
         return view('livewire.frontend.home', compact('profiles'))
             ->layout('layouts.frontend');

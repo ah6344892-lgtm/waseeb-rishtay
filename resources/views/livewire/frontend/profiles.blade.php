@@ -164,7 +164,7 @@
 
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 
-            <div class="overflow-hidden rounded-3xl border border-gray-100 bg-white p-6 shadow-xl lg:p-8">
+            <!-- <div class="overflow-hidden rounded-3xl border border-gray-100 bg-white p-6 shadow-xl lg:p-8">
 
                 {{-- Heading --}}
                 <div class="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
@@ -311,6 +311,219 @@
                         <button
                             class="rounded-full border border-primary/20 bg-primary/5 px-4 py-2 text-sm text-primary transition hover:bg-primary hover:text-white">
                             Hafiz-e-Quran
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div> -- IGNORE -->
+
+            <div class="overflow-hidden rounded-3xl border border-gray-100 bg-white p-6 shadow-xl lg:p-8">
+
+                {{-- Heading --}}
+                <div class="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
+
+                    <div>
+                        <span
+                            class="inline-flex items-center rounded-full bg-primary/10 px-4 py-1 text-sm font-semibold text-primary">
+                            Advanced Search
+                        </span>
+
+                        <h2 class="mt-3 text-3xl font-bold text-gray-900">
+                            Find Your Ideal Match
+                        </h2>
+
+                        <p class="mt-2 text-gray-500">
+                            Filter verified profiles according to your preferences.
+                        </p>
+                    </div>
+
+                    <button type="button" wire:click="resetFilters"
+                        class="rounded-xl border border-primary px-5 py-3 font-semibold text-primary transition hover:bg-primary hover:text-white">
+                        Reset Filters
+                    </button>
+
+                </div>
+
+
+                {{-- Filters --}}
+                <div class="mt-10 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+
+                    {{-- Search --}}
+                    <div>
+                        <label class="mb-2 block text-sm font-semibold text-gray-700">
+                            Search
+                        </label>
+
+                        <input type="text" wire:model.live.debounce.400ms="search"
+                            placeholder="Name, profile ID, profession..."
+                            class="w-full rounded-xl border border-gray-200 bg-white px-4 py-3 outline-none transition focus:border-primary focus:ring-4 focus:ring-primary/10">
+                    </div>
+
+
+                    {{-- Gender --}}
+                    <div>
+                        <label class="mb-2 block text-sm font-semibold text-gray-700">
+                            Gender
+                        </label>
+
+                        <select wire:model.live="gender"
+                            class="w-full rounded-xl border border-gray-200 bg-white px-4 py-3 outline-none transition focus:border-primary focus:ring-4 focus:ring-primary/10">
+
+                            <option value="">Any Gender</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+
+                        </select>
+                    </div>
+
+
+                    {{-- Age --}}
+                    <div>
+                        <label class="mb-2 block text-sm font-semibold text-gray-700">
+                            Age
+                        </label>
+
+                        <select wire:model.live="age"
+                            class="w-full rounded-xl border border-gray-200 bg-white px-4 py-3 outline-none transition focus:border-primary focus:ring-4 focus:ring-primary/10">
+
+                            <option value="">Any Age</option>
+                            <option value="18-25">18 - 25</option>
+                            <option value="26-30">26 - 30</option>
+                            <option value="31-35">31 - 35</option>
+                            <option value="36+">36+</option>
+
+                        </select>
+                    </div>
+
+
+                    {{-- Caste --}}
+                    <div>
+                        <label class="mb-2 block text-sm font-semibold text-gray-700">
+                            Caste
+                        </label>
+
+                        <select wire:model.live="caste"
+                            class="w-full rounded-xl border border-gray-200 bg-white px-4 py-3 outline-none transition focus:border-primary focus:ring-4 focus:ring-primary/10">
+
+                            <option value="">All Castes</option>
+
+                            @foreach ($castes as $casteOption)
+                                <option value="{{ $casteOption }}">
+                                    {{ $casteOption }}
+                                </option>
+                            @endforeach
+
+                        </select>
+                    </div>
+
+
+                    {{-- Sect --}}
+                    <div>
+                        <label class="mb-2 block text-sm font-semibold text-gray-700">
+                            Sect
+                        </label>
+
+                        <select wire:model.live="sect"
+                            class="w-full rounded-xl border border-gray-200 bg-white px-4 py-3 outline-none transition focus:border-primary focus:ring-4 focus:ring-primary/10">
+
+                            <option value="">All Sects</option>
+
+                            @foreach ($sects as $sectOption)
+                                <option value="{{ $sectOption }}">
+                                    {{ $sectOption }}
+                                </option>
+                            @endforeach
+
+                        </select>
+                    </div>
+
+
+                    {{-- City --}}
+                    <div>
+                        <label class="mb-2 block text-sm font-semibold text-gray-700">
+                            City
+                        </label>
+
+                        <select wire:model.live="city"
+                            class="w-full rounded-xl border border-gray-200 bg-white px-4 py-3 outline-none transition focus:border-primary focus:ring-4 focus:ring-primary/10">
+
+                            <option value="">All Cities</option>
+
+                            @foreach ($cities as $cityOption)
+                                <option value="{{ $cityOption }}">
+                                    {{ $cityOption }}
+                                </option>
+                            @endforeach
+
+                        </select>
+                    </div>
+
+
+                    {{-- Education --}}
+                    <div>
+                        <label class="mb-2 block text-sm font-semibold text-gray-700">
+                            Education
+                        </label>
+
+                        <select wire:model.live="education"
+                            class="w-full rounded-xl border border-gray-200 bg-white px-4 py-3 outline-none transition focus:border-primary focus:ring-4 focus:ring-primary/10">
+
+                            <option value="">Any Education</option>
+
+                            @foreach ($educations as $educationOption)
+                                <option value="{{ $educationOption }}">
+                                    {{ $educationOption }}
+                                </option>
+                            @endforeach
+
+                        </select>
+                    </div>
+
+
+                    {{-- Search Button --}}
+                    <div class="flex items-end">
+
+                        <button type="button" wire:click="$refresh"
+                            class="w-full rounded-xl bg-primary px-6 py-3 font-semibold text-white shadow-lg transition-all duration-300 hover:-translate-y-1 hover:bg-primary/90 hover:shadow-xl">
+
+                            Search Profiles
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                {{-- Popular Searches --}}
+                <div class="mt-8">
+
+                    <p class="mb-3 text-sm font-semibold text-gray-700">
+                        Popular Searches
+                    </p>
+
+                    <div class="flex flex-wrap gap-3">
+
+                        <button type="button" wire:click="$set('search', 'Doctor')"
+                            class="rounded-full border border-primary/20 bg-primary/5 px-4 py-2 text-sm text-primary transition hover:bg-primary hover:text-white">
+                            Doctor
+                        </button>
+
+                        <button type="button" wire:click="$set('search', 'Engineer')"
+                            class="rounded-full border border-primary/20 bg-primary/5 px-4 py-2 text-sm text-primary transition hover:bg-primary hover:text-white">
+                            Engineer
+                        </button>
+
+                        <button type="button" wire:click="$set('search', 'Government')"
+                            class="rounded-full border border-primary/20 bg-primary/5 px-4 py-2 text-sm text-primary transition hover:bg-primary hover:text-white">
+                            Government Job
+                        </button>
+
+                        <button type="button" wire:click="$set('search', 'Overseas')"
+                            class="rounded-full border border-primary/20 bg-primary/5 px-4 py-2 text-sm text-primary transition hover:bg-primary hover:text-white">
+                            Overseas
                         </button>
 
                     </div>
@@ -519,7 +732,11 @@
                                 <button
                                     class="rounded-xl border border-primary px-5 py-3 font-semibold text-primary transition hover:bg-primary hover:text-white">
 
-                                    Connect
+                                    <a href="https://wa.me/{{ config('contact.whatsapp') }}" target="_blank"
+                                        rel="noopener noreferrer">
+                                        WhatsApp
+                                    </a>
+
 
                                 </button>
 

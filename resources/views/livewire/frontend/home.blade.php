@@ -196,7 +196,8 @@
                                 <button
                                     class="rounded-xl border border-primary px-5 py-3 font-semibold text-primary transition hover:bg-primary hover:text-white">
 
-                                    Connect
+                                    <a href="https://wa.me/{{ config('contact.whatsapp') }}" target="_blank"
+                                        rel="noopener noreferrer">WhatsApp</a>
 
                                 </button>
 
