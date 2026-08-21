@@ -10,7 +10,7 @@
 
                 {{-- Badge --}}
                 <div
-                    class="rounded-2xl border border-gray-100 bg-white p-5 shadow-md transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
+                    class="flex items-center gap-2 rounded-2xl border border-gray-100 bg-white p-5 shadow-md transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
 
                     <span class="relative flex h-3 w-3">
 
